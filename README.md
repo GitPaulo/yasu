@@ -1,7 +1,7 @@
 # Yasu 1.0.0
 JDA Discord Bot - Open Source.
-Made by Paulo for fun and use in our discord server!
-Very inconsitent updates. Btw.
+Made as a personal bot. Abuses many APIs. If something is broken, that's probably why.
+Very inconsitent updates. Can confirm, not the most buggy bot. Pr(A) = 0.5. Where A, is the event of the program crashing.
 
 # Features
 Many. +Music Bot.
