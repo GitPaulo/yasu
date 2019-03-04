@@ -28,7 +28,7 @@ public class AudioPlayerSendHandler
     if (this.lastFrame == null) {
       this.lastFrame = this.audioPlayer.provide();
     }
-    byte[] data = this.lastFrame != null ? this.lastFrame.data : null;
+    byte[] data = this.lastFrame != null ? this.lastFrame.getData() : null;
     this.lastFrame = null;
     
     return data;

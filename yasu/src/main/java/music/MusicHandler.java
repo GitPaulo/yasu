@@ -40,7 +40,7 @@ public class MusicHandler {
 
 	private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
 		long guildId = Long.parseLong(guild.getId());
-		GuildMusicManager musicManager = (GuildMusicManager) this.musicManagers.get(Long.valueOf(guildId));
+		GuildMusicManager musicManager = this.musicManagers.get(Long.valueOf(guildId));
 		if (musicManager == null) {
 			musicManager = new GuildMusicManager(this.playerManager, guild);
 			this.musicManagers.put(Long.valueOf(guildId), musicManager);
@@ -55,11 +55,10 @@ public class MusicHandler {
 		}
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 
-		final String msg_id = ((Message) channel
-				.sendMessage(DiscordMessage.embedMusicMessage(Yasu.bot.getInstance().getSelfUser(),
+		final String msg_id = ( channel.sendMessage(DiscordMessage.embedMusicMessage(Yasu.bot.getInstance().getSelfUser(),
 						"Processing Request!", "Please wait while I process your request...."))
 				.complete()).getId();
-		channel.sendTyping().queue();
+		channel.sendTyping().queue(); 
 
 		this.playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
 			public void trackLoaded(AudioTrack track) {
@@ -72,7 +71,7 @@ public class MusicHandler {
 			public void playlistLoaded(AudioPlaylist playlist) {
 				AudioTrack firstTrack = playlist.getSelectedTrack();
 				if (firstTrack == null) {
-					firstTrack = (AudioTrack) playlist.getTracks().get(0);
+					firstTrack = playlist.getTracks().get(0);
 				}
 				int i = 0;
 				for (AudioTrack at : playlist.getTracks()) {
@@ -150,7 +149,7 @@ public class MusicHandler {
 		}
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		if (musicManager.scheduler.hasNextTrack()) {
-			AudioTrack nextrack = ((AudioTrack) musicManager.scheduler.getQueue().peek()).makeClone();
+			AudioTrack nextrack = (musicManager.scheduler.getQueue().peek()).makeClone();
 			channel.sendMessage(DiscordMessage.embedMusicMessage(Yasu.bot.getInstance().getSelfUser(), "Song Skip",
 					" Skipped to next track: [" + nextrack.getInfo().title + "]")).queue();
 		} else if (musicManager.scheduler.isOnQueueRepeat()) {
@@ -325,10 +324,7 @@ public class MusicHandler {
 
 	private boolean checkConnection(TextChannel channel) {
 		AudioManager audioManager = channel.getGuild().getAudioManager();
-		if ((!audioManager.isConnected()) && (!audioManager.isAttemptingToConnect())) {
-			return false;
-		}
-		return true;
+		return !audioManager.isConnected() && (!audioManager.isAttemptingToConnect());
 	}
 
 	private boolean allowInteraction(TextChannel channel) {

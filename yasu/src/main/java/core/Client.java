@@ -162,9 +162,10 @@ public class Client {
 	public void saveData() {
 		JSONObject json = new JSONObject();
 		// Serialise black list
-		JSONArray blist = new JSONArray();
+		JSONArray blist = new JSONArray(); 
 		for (User v : blackList) {
-			blist.put(v.getName() + "(" + v.getId() + ")");
+			if( v != null )
+				blist.put(v.getAsMention() + "(" + v.getId() + ")");
 		}
 		// Append to JSONObject and store
 		json.put("blackList", blist);

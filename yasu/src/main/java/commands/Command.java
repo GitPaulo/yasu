@@ -4,13 +4,13 @@ import java.util.HashMap;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public abstract interface Command {
-	public abstract boolean called(String paramString, String[] paramArrayOfString,
-			MessageReceivedEvent paramMessageReceivedEvent);
+	public abstract boolean called(String raw, String[] args,
+			MessageReceivedEvent event);
 
-	public abstract void action(String paramString, String[] paramArrayOfString,
-			MessageReceivedEvent paramMessageReceivedEvent);
+	public abstract void action(String raw, String[] args,
+			MessageReceivedEvent event);
 
-	public abstract void executed(boolean paramBoolean, MessageReceivedEvent paramMessageReceivedEvent);
+	public abstract void executed(boolean succ, MessageReceivedEvent event);
 
 	public abstract String getDescription();
 

@@ -14,7 +14,7 @@ public class Github implements Command {
 	}
 
 	public void action(String raw, String[] args, MessageReceivedEvent event) {
-		String url = "https://github.com/GitPaulo/Nissan";
+		String url = "https://github.com/GitPaulo/Yasu";
 		event.getChannel().sendMessage(url).queue();
 	}
 

@@ -20,6 +20,7 @@ import commands.fun.Joke;
 import commands.fun.Naruto;
 import commands.fun.Neko;
 import commands.fun.Roll;
+import commands.fun.TextArt;
 import commands.fun.Yasusada;
 import commands.informative.ChannelInfo;
 import commands.informative.Creator;
@@ -37,6 +38,7 @@ import commands.utility.Google;
 import commands.utility.Invite;
 import commands.utility.JavaRun;
 import commands.utility.Math;
+import commands.utility.OverwatchRoulette;
 import commands.utility.Ping;
 import commands.utility.Respects;
 import commands.utility.TinyUrl;
@@ -61,13 +63,14 @@ import listeners.GuildListener;
 import listeners.MessageListener;
 import music.MusicHandler;
 import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
-
+ 
 public class Yasu {
 	private static final ConfigurationHandler CONFIG = new ConfigurationHandler();
 	public static final String DEVID = "166176374036365312";
@@ -75,7 +78,7 @@ public class Yasu {
 	public static final StorageHandler DATA = new StorageHandler("yasu_data.json");
 	public static Client bot;
 
-	public static void main(String[] args) throws LoginException, IllegalArgumentException, RateLimitedException {
+	public static void main(String[] args) throws LoginException, RateLimitedException {
 		if ((args.length > 0) && (args[0].equals("plunch"))) {
 			boot();
 			for (Guild g : bot.getInstance().getGuilds()) {
@@ -86,11 +89,11 @@ public class Yasu {
 		}
 		Scanner in = new Scanner(System.in);
 		String input = null;
-		Logger.info(new Object[] { "Yasu application started! Setup & Boot process initialising...." });
+		Logger.info("Yasu application started! Setup & Boot process initialising....");
 		if (CONFIG.isNew()) {
 			startSetupUI();
 		} else {
-			Logger.info(new Object[] { "Skip setup? (must have a valid properties file setup already) Y/N" });
+			Logger.info("Skip setup? (must have a valid properties file setup already) Y/N");
 			for (;;) {
 				input = in.nextLine();
 				if (input.equalsIgnoreCase("n")) {
@@ -101,11 +104,10 @@ public class Yasu {
 					boot();
 					break;
 				}
-				Logger.info(new Object[] { "Invalid input! Try Again" });
+				Logger.info("Invalid input! Try Again" );
 			}
 		}
-		input = null;
-		Logger.info(new Object[] { "Activate User Interface? Y/N (Doesnt work on linux atm - rip)" });
+		Logger.info("Activate User Interface? Y/N (Doesnt work on linux atm - rip)");
 		for (;;) {
 			input = in.nextLine();
 			if (input.equalsIgnoreCase("y")) {
@@ -120,7 +122,7 @@ public class Yasu {
 		in.close();
 	}
 
-	public static void boot() throws LoginException, IllegalArgumentException, RateLimitedException {
+	public static void boot() throws LoginException, RateLimitedException {
 		String[] prefixes = new String[2];
 		HashMap<String, Command> commands = new HashMap<String, Command>();
 		CommandParser commandparser = new CommandParser();
@@ -171,7 +173,7 @@ public class Yasu {
 		commands.put("insult", new Insult());
 		commands.put("neko", new Neko());
 		commands.put("joke", new Joke());
-		commands.put("save", new Save());
+		commands.put("save", new Save()); 
 		commands.put("f", new Respects());
 		commands.put("fact", new Fact());
 		commands.put("say", new Say());
@@ -182,40 +184,39 @@ public class Yasu {
 		commands.put("github", new Github());
 		commands.put("yasu", new Yasusada());
 		commands.put("restart", new Restart());
-		try {
-			bot = new Client(
-					new JDABuilder(AccountType.BOT).setToken(token).setStatus(status)
-							.setGame(Game.of(Game.GameType.WATCHING, game)).setAutoReconnect(autor)
-							.setBulkDeleteSplittingEnabled(false).setAudioEnabled(true)
-							.addEventListener(new Object[] { new MessageListener() })
-							.addEventListener(new Object[] { new GeneralListener() })
-							.addEventListener(new Object[] { new ClientListener() })
-							.addEventListener(new Object[] { new GuildListener() }).buildBlocking(),
-					commands, APIkeys, prefixes, commandparser, hostid, musicHandler, blackList, storageBigMessages);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		commands.put("textart", new TextArt());
+		commands.put("owroulette", new OverwatchRoulette());
+		
+		JDA jda = new JDABuilder(AccountType.BOT).setToken(token).setStatus(status)
+				.setGame(Game.of(Game.GameType.WATCHING, game)).setAutoReconnect(autor)
+				.setBulkDeleteSplittingEnabled(false).setAudioEnabled(true)
+				.addEventListener(new MessageListener())
+				.addEventListener(new GeneralListener() )
+				.addEventListener(new ClientListener())
+				.addEventListener(new GuildListener()).build();
+		
+		bot = new Client(
+				jda,
+				commands, APIkeys, prefixes, commandparser, hostid, musicHandler, blackList, storageBigMessages);
+		
 		bot.loadData();
+		
 		Vote.initVotingStructure();
 	}
 
 	private static void startSetupUI() {
-		Logger.info(
-
-				new Object[] { "Starting setup UI...." });
+		Logger.info("Starting setup UI....");
 		SetupGUI frame = new SetupGUI(CONFIG);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		frame.toFront();
+		frame.toFront(); 
 	}
 
 	private static void startUI() {
-		Logger.info(
-
-				new Object[] { "Starting UI...." });
+		Logger.info("Starting UI...." );
 		InterfaceGUI UI = new InterfaceGUI();
 		UI.setLocationRelativeTo(null);
-		UI.setVisible(true);
+		UI.setVisible(true); 
 		UI.toFront();
 	}
 

@@ -1,4 +1,7 @@
-/target/
-/yasu_config.properties
-/yasu_data.json
-/yasu_logs.txt
+# things i dont want seen!
+target/
+yasu_config.properties
+yasu_data.json
+yasu_logs.txt
+yasu_naruto/
+.settings/

@@ -30,7 +30,7 @@ public class GuildMusicManager {
 						&& (guild.getAudioManager().isConnected()) && (!this.isChecking)) {
 					this.isChecking = true;
 
-					final Message msg = (Message) guild.getDefaultChannel()
+					final Message msg = guild.getDefaultChannel()
 							.sendMessage(DiscordMessage.embedMusicMessage(Yasu.bot.getInstance().getSelfUser(),
 									"Auto Leave",
 									"Seems like no one is using the bot! Will leave music channel in **10** seconds!"))
@@ -46,7 +46,7 @@ public class GuildMusicManager {
 										.complete();
 							} else {
 								msg.editMessage(DiscordMessage.embedMusicMessage(Yasu.bot.getInstance().getSelfUser(),
-										"Auto Leave", "**Leaving** music channel! \n**Clearing** music data!"))
+										"Auto Leave", "**Leaving** music channel and **clearing** music data!"))
 										.complete();
 								player.destroy();
 								scheduler.clearQueue();
@@ -54,10 +54,10 @@ public class GuildMusicManager {
 							}
 							isChecking = false;
 						}
-					}, 10000L);
+					}, LEAVEDELAY);
 				}
 			}
-		}, 30000L, 30000L);
+		}, ACTIVITYDELAY, ACTIVITYDELAY);
 
 		this.player.addListener(this.scheduler);
 	}
