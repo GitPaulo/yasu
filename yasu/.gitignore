@@ -5,3 +5,9 @@ yasu_data.json
 yasu_logs.txt
 yasu_naruto/
 .settings/
+
+# yolo
+.stackdump
+sh.exe.stackdump
+.exe.stackdump
+bash.exe.stackdump
