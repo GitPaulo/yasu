@@ -1,10 +1,9 @@
-# Yasu [NO LONGER MAINTAINED - OLD CODE]
-![JDA](https://github.com/DV8FromTheWorld/JDA) based discord bot.
-Made to be a **personal** bot. Abuses many APIs. If something is broken, that's probably why.
-Very inconsitent updates. Confirmed by many users, not the most buggy bot. 
-   Pr(A) = 0.5
-Where A, is the event of the bot program crashing.
+# Yasu [ARCHIVED (REASON: OLD CODE)]
+"Yasu" is a personal discord bot project written in Java using the ![JDA](https://github.com/DV8FromTheWorld/JDA) library.
+This project is **no longer maintained**. This means that there will be no future updates to the code in this repository. It is publicly archived to serve as an example for how to build a Java discord bot.
 
-# Features
-- Many. 
-- +Music Bot.
+## Features
+- Easy bot setup w/ GUI.
+- Somewhat responsible usage of external informational/fun APIs.
+- Server Administration.
+- Music player. (Youtube, Soundcloud and Spotify)
